@@ -69,3 +69,12 @@ func (s Set) Values() []interface{} {
 func (s Set) IsEmpty() bool {
 	return len(s.values) == 0
 }
+
+func (s Set) String() string {
+	var result string
+	for v,_ :=range s.data {
+		result += v + ","
+	}
+
+	return result
+}
