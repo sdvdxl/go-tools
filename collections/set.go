@@ -1,4 +1,5 @@
 package collections
+import "fmt"
 
 type Set struct {
 	data   map[interface{}]bool
@@ -73,7 +74,7 @@ func (s Set) IsEmpty() bool {
 func (s Set) String() string {
 	var result string
 	for v,_ :=range s.data {
-		result += v + ","
+		result += fmt.Sprintf("%v", v)
 	}
 
 	return result
