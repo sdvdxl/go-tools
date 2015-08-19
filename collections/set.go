@@ -10,8 +10,8 @@ func (s Set) Size() int {
 	return len(s.values)
 }
 
-func NewSet(size int, values ...interface{}) Set {
-	set := Set{}
+func NewSet(size int, values ...interface{}) *Set {
+	set := &Set{}
 	set.data = make(map[interface{}]bool)
 	for _, val := range values {
 		set.Add(val)
@@ -61,17 +61,17 @@ func (s *Set) Remove(val interface{}) bool {
 }
 
 // get values from the set
-func (s Set) Values() []interface{} {
+func (s *Set) Values() []interface{} {
 	return s.values
 }
 
 //values len is 0 will return true
 // otherwise will return false
-func (s Set) IsEmpty() bool {
+func (s *Set) IsEmpty() bool {
 	return len(s.values) == 0
 }
 
-func (s Set) String() string {
+func (s *Set) String() string {
 	var result string
 	for v,_ :=range s.data {
 		result += fmt.Sprintf("%v", v)
