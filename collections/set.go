@@ -2,8 +2,9 @@ package collections
 import "fmt"
 
 type Set struct {
-	data   map[interface{}]bool
-	values []interface{}
+	data     map[interface{}]bool
+	values   []interface{}
+	initSize int
 }
 
 func (s Set) Size() int {
@@ -12,6 +13,7 @@ func (s Set) Size() int {
 
 func NewSet(size int, values ...interface{}) *Set {
 	set := &Set{}
+	set.initSize = size
 	set.data = make(map[interface{}]bool)
 	for _, val := range values {
 		set.Add(val)
@@ -73,9 +75,14 @@ func (s *Set) IsEmpty() bool {
 
 func (s *Set) String() string {
 	var result string
-	for v,_ :=range s.data {
+	for v, _ := range s.data {
 		result += fmt.Sprintf("%v", v)
 	}
 
 	return result
+}
+
+func (s *Set) Clear() *Set {
+	s.values = make([]interface{}, 0, s.initSize)
+	return s
 }
