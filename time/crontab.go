@@ -17,12 +17,12 @@ type Crontab struct {
 	ticker         *time.Ticker
 	tickerDuration time.Duration //周期值, 秒1-59, 分 1-59， 日 1-31, 月 1-12，星期 0-6，0代表周日， 其中星期不可和日或者月同时使用
 	isTicker       bool
-	seconds        collections.Set //0-59
-	minutes        collections.Set // 0-59
-	hours          collections.Set //0-23
-	days           collections.Set // 1-31
-	monthes        collections.Set // 1-12
-	weekdays       collections.Set //0-6
+	seconds        *collections.Set //0-59
+	minutes        *collections.Set // 0-59
+	hours          *collections.Set //0-23
+	days           *collections.Set // 1-31
+	monthes        *collections.Set // 1-12
+	weekdays       *collections.Set //0-6
 	handlers       []Handler
 	stop           bool
 }
@@ -265,7 +265,7 @@ func (c *Crontab) parseSecond(arg string) error {
 }
 
 //解析 分，时，天，月，星期
-func parseArgument(arg string, unitMinValue, unitMaxValue int, unitTye string) (result collections.Set, isTicker bool, err error) {
+func parseArgument(arg string, unitMinValue, unitMaxValue int, unitTye string) (result *collections.Set, isTicker bool, err error) {
 	result = collections.NewSet(unitMaxValue - unitMinValue + 1)
 
 	monthesAbbr := map[string]int{"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
@@ -355,7 +355,7 @@ func parseArgument(arg string, unitMinValue, unitMaxValue int, unitTye string) (
 				}
 			}
 		} else if param == "*" {
-			for i:=unitMinValue;i<=unitMaxValue;i++ {
+			for i := unitMinValue; i <= unitMaxValue; i++ {
 				result.Add(i)
 			}
 			return

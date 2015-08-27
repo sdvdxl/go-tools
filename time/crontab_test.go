@@ -10,7 +10,7 @@ func TestCrontabSecond(t *testing.T) {
 	crontab, err := NewCrontab("* * * * * *", func() {
 		fmt.Println("call func1", time.Now())
 	}, func() {
-		fmt.Println("call func2",time.Now())
+		fmt.Println("call func2", time.Now())
 	})
 	if err != nil {
 		fmt.Println(err)
