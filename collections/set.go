@@ -74,12 +74,7 @@ func (s *Set) IsEmpty() bool {
 }
 
 func (s *Set) String() string {
-	var result string
-	for v, _ := range s.data {
-		result += fmt.Sprintf("%v", v)
-	}
-
-	return result
+	return fmt.Sprint(s.values)
 }
 
 func (s *Set) Clear() *Set {
