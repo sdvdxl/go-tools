@@ -15,7 +15,7 @@ const (
 type Timestamp time.Time
 
 func (t Timestamp) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%v", time.Time(t).Nanosecond()/1000000)), nil
+	return []byte(fmt.Sprint(time.Time(t).UnixNano() / 1000000)), nil
 }
 
 // ParseDate yyyy-MM-dd
