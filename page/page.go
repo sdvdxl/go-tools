@@ -81,5 +81,5 @@ func NewFromString(cur, size string) Page {
 // size 分页大小
 // 如果cur和size int 转换失败，分别转换成 defalult
 func NewDefaultFromString(cur, size string, curDefault, sizeDefault int) Page {
-	return New(number.DefaultInt(cur, curDefault), number.DefaultInt(size, DefaultPageSize))
+	return New(number.DefaultInt(cur, curDefault), number.DefaultInt(size, sizeDefault))
 }
