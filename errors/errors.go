@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-// NewCodeError 新建一个error
-func NewCodeError(code int, msgs ...interface{}) CodeError {
+// NewCode 新建一个error
+func NewCode(code int, msgs ...interface{}) CodeError {
 	return CodeError{Code: code, Msg: fmt.Sprintf(strings.Repeat("%s", len(msgs)), msgs...)}
 }
 

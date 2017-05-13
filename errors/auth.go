@@ -1,15 +1,15 @@
 package errors
 
-// AuthError 权限错误
-type AuthError struct {
+// Auth 权限错误
+type Auth struct {
 	CodeError
 }
 
-func (e AuthError) Error() string {
+func (e Auth) Error() string {
 	return e.CodeError.Error()
 }
 
-// NewAuthError 新建
-func NewAuthError(code int, msgs ...interface{}) error {
-	return AuthError{NewCodeError(code, msgs)}
+// NewAuth 新建
+func NewAuth(code int, msgs ...interface{}) error {
+	return Auth{NewCode(code, msgs)}
 }

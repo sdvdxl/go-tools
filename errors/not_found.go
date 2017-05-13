@@ -1,15 +1,15 @@
 package errors
 
-// NotFoundError 找不到
-type NotFoundError struct {
+// NotFound 找不到
+type NotFound struct {
 	CodeError
 }
 
-func (e NotFoundError) Error() string {
+func (e NotFound) Error() string {
 	return e.CodeError.Error()
 }
 
-// NewNotFoundError 新建
-func NewNotFoundError(code int, msgs ...interface{}) error {
-	return NotFoundError{NewCodeError(code, msgs)}
+// NewNotFound 新建
+func NewNotFound(code int, msgs ...interface{}) error {
+	return NotFound{NewCode(code, msgs)}
 }
