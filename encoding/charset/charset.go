@@ -1,14 +1,14 @@
 package charset
 
 import (
+	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/encoding/korean"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/encoding/traditionalchinese"
-	"golang.org/x/text/encoding/charmap"
 )
 
-const (
+var (
 	GB18030   = simplifiedchinese.GB18030
 	GBK       = simplifiedchinese.GBK
 	HZGB2312  = simplifiedchinese.HZGB2312
@@ -25,5 +25,5 @@ const (
 	ISO8859_7 = charmap.ISO8859_7
 )
 
-func a()  {
+func a() {
 }

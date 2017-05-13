@@ -2,11 +2,12 @@ package datetime
 
 import (
 	"errors"
-	"github.com/sdvdxl/go-tools/collections"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/sdvdxl/go-tools/collection"
 )
 
 const (
@@ -17,12 +18,12 @@ type Crontab struct {
 	ticker         *time.Ticker
 	tickerDuration time.Duration //周期值, 秒1-59, 分 1-59， 日 1-31, 月 1-12，星期 0-6，0代表周日， 其中星期不可和日或者月同时使用
 	isTicker       bool
-	seconds        *collections.Set //0-59
-	minutes        *collections.Set // 0-59
-	hours          *collections.Set //0-23
-	days           *collections.Set // 1-31
-	monthes        *collections.Set // 1-12
-	weekdays       *collections.Set //0-6
+	seconds        *collection.Set //0-59
+	minutes        *collection.Set // 0-59
+	hours          *collection.Set //0-23
+	days           *collection.Set // 1-31
+	monthes        *collection.Set // 1-12
+	weekdays       *collection.Set //0-6
 	handlers       []Handler
 	stop           bool
 }
@@ -265,8 +266,8 @@ func (c *Crontab) parseSecond(arg string) error {
 }
 
 //解析 分，时，天，月，星期
-func parseArgument(arg string, unitMinValue, unitMaxValue int, unitTye string) (result *collections.Set, isTicker bool, err error) {
-	result = collections.NewSet(unitMaxValue - unitMinValue + 1)
+func parseArgument(arg string, unitMinValue, unitMaxValue int, unitTye string) (result *collection.Set, isTicker bool, err error) {
+	result = collection.NewSet(unitMaxValue - unitMinValue + 1)
 
 	monthesAbbr := map[string]int{"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
 

@@ -16,7 +16,7 @@ const (
 	DefaultPageSize int = 10
 
 	// MaxPageSize 最大分页大小
-	MaxPageSize int = 50
+	MaxPageSize int = 5000
 )
 
 // Offset 用于pg 分页参数偏移
