@@ -19,6 +19,7 @@ func (e ConstError) Error() string {
 
 // CodeError 带错误码的错误
 type CodeError struct {
+	Log  string `json:"-"` // record log, not show for user
 	Msg  string `json:"msg"`
 	Code int    `json:"code"`
 }
