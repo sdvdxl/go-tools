@@ -24,5 +24,5 @@ type CodeError struct {
 }
 
 func (e CodeError) Error() string {
-	return fmt.Sprint(e.Msg, e.Code)
+	return fmt.Sprint("code:", e.Code, " msg:", e.Msg)
 }

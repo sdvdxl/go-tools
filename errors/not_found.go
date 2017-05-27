@@ -11,5 +11,5 @@ func (e NotFound) Error() string {
 
 // NewNotFound 新建
 func NewNotFound(code int, msgs ...interface{}) error {
-	return NotFound{NewCode(code, msgs)}
+	return NotFound{NewCode(code, msgs...)}
 }

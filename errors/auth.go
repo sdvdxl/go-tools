@@ -11,5 +11,5 @@ func (e Auth) Error() string {
 
 // NewAuth 新建
 func NewAuth(code int, msgs ...interface{}) error {
-	return Auth{NewCode(code, msgs)}
+	return Auth{NewCode(code, msgs...)}
 }

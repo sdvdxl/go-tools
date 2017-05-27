@@ -2,7 +2,7 @@ package errors
 
 // NewDuplicatedError 新建
 func NewDuplicatedError(code int, msgs ...interface{}) error {
-	return Duplicated{NewCode(code, msgs)}
+	return Duplicated{NewCode(code, msgs...)}
 }
 
 // Duplicated 重复

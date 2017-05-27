@@ -11,5 +11,5 @@ func (e IlleagleArgument) Error() string {
 
 // NewIlleagleArgument 新建
 func NewIlleagleArgument(code int, msgs ...interface{}) error {
-	return IlleagleArgument{NewCode(code, msgs)}
+	return IlleagleArgument{NewCode(code, msgs...)}
 }
