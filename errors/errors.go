@@ -28,8 +28,8 @@ func (e CodeError) Error() string {
 	return fmt.Sprint("code:", e.Code, " msg:", e.Msg)
 }
 
-var (
-	NotFoundError        = NewNotFound(0, "not found")
-	DuplicatedError      = NewDuplicatedError(0, "already exists")
-	IllegalArgumentError = NewIllegalArgument(0, "illegal argument")
+const (
+	NotFoundError        = ConstError("not found")
+	DuplicatedError      = ConstError("already exists")
+	IllegalArgumentError = ConstError("illegal argument")
 )
