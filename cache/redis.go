@@ -74,6 +74,10 @@ func (r *Redis) Init() {
 // Get 根据key获取值
 // 如果存在key，则返回值，true，如果不存在，返回nil，false
 func (r *Redis) Get(key string, target interface{}) bool {
+	if "" == key {
+		return false
+	}
+
 	value := reflect.ValueOf(target)
 	if value.Type().Kind() != reflect.Ptr {
 		errors.Panic(errors.ConstError("target should be pointer"))

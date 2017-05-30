@@ -26,6 +26,8 @@ func TestRedis(t *testing.T) {
 	gu := user{}
 	assert.True(t, c.Get("a", &gu))
 	assert.True(t, "sdvdxl" == gu.Name, "test name")
+	assert.Equal(t, c.GetString("name"), "sdvdxl")
+	_ = c.GetString("")
 }
 
 type user struct {
