@@ -23,6 +23,6 @@ func Default(defaultFormat Country) {
 }
 
 // IsLegal 手机号是否合法
-func IsLegal(phone string) bool {
+func IsValid(phone string) bool {
 	return phoneFormat[defaultFormat].MatchString(phone)
 }
