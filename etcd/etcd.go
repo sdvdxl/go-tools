@@ -33,6 +33,15 @@ func (e Etcd) GetInt(key string) (int, error) {
 	return strconv.Atoi(value)
 }
 
+func (e Etcd) GetFloat(key string) (float64, error) {
+	value, err := e.Get(key)
+	if err != nil {
+		return 0, err
+	}
+
+	return strconv.ParseFloat(value, 64)
+}
+
 func (e Etcd) Get(key string) (string, error) {
 	resp, err := e.KeysAPI.Get(context.Background(), key, nil)
 	if err != nil {
@@ -51,6 +60,14 @@ func (e Etcd) SetOrUpdate(key, value string) error {
 }
 
 func Int(value int, err error) int {
+	if err != nil {
+		log.WithError(err).Fatal()
+	}
+
+	return value
+}
+
+func Float(value float64, err error) float64 {
 	if err != nil {
 		log.WithError(err).Fatal()
 	}
