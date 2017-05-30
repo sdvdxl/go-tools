@@ -33,3 +33,10 @@ const (
 	DuplicatedError      = ConstError("already exists")
 	IllegalArgumentError = ConstError("illegal argument")
 )
+
+// Panic 如果err 不是nil，则panic
+func Panic(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
