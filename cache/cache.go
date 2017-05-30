@@ -1,5 +1,7 @@
 package cache
 
+import "time"
+
 // Cacher 缓存接口
 type Cacher interface {
 	Init()
@@ -12,5 +14,6 @@ type Cacher interface {
 	Delete(key string)
 	// Set 放置值
 	Set(key string, value interface{})
+	SetExpired(key string, value interface{}, t time.Duration)
 	Close()
 }
