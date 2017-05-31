@@ -48,7 +48,7 @@ func (r *Redis) Init() {
 			errors.Panic(err)
 			if r.Password != "" {
 				if _, err := c.Do("AUTH", r.Password); err != nil {
-					errors.Panic(c.Close())
+					errors.Panic(err)
 				}
 			}
 			return c, nil
@@ -183,6 +183,10 @@ func (r Redis) Delete(key string) {
 
 // Close 关闭redis 链接
 func (r Redis) Close() {
+	if r.pool == nil {
+		log.Info("redis pool already closed")
+		return
+	}
 	if err := r.pool.Close(); err != nil {
 		panic(err)
 	}
