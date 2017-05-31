@@ -13,9 +13,8 @@ import (
 func TestRedis(t *testing.T) {
 	log.SetLevel(log.DebugLevel)
 	gob.Register(&user{})
-	var c Cacher = &Redis{Host: "localhost", Port: 6379, Password: "sss"}
+	var c Cacher = Default("localhost", 6379)
 	defer c.Close()
-	c.Init()
 	assert.False(t, c.Exists("sdf"))
 	u := user{"sdvdxl", 27}
 

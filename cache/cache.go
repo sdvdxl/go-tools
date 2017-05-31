@@ -4,7 +4,6 @@ import "time"
 
 // Cacher 缓存接口
 type Cacher interface {
-	Init()
 	Get(key string, target interface{}) bool
 	GetString(key string) string
 	GetBool(key string) bool

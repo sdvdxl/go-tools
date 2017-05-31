@@ -16,38 +16,27 @@ import (
 )
 
 type Redis struct {
-	//cacheStore *cache.Cache
-	pool *redis.Pool
-	// cacheStore *goCache.Cache
-	// Host redis 主机
-	Host string
-	// Port 端口
-	Port int
-	// Password 密码，如果没有密码可以不设置
-	Password    string
-	MaxIdle     int
-	IdleTimeout time.Duration
+	Pool *redis.Pool
 }
 
-// Init 初始化
-func (r *Redis) Init() {
-	if r.MaxIdle <= 0 {
-		r.MaxIdle = 2
-	}
+const (
+	DefaultRedisMaxIdle     = 2
+	DefaultRedisIdleTimeout = 120 * time.Second
+)
 
-	if r.IdleTimeout <= 0 {
-		r.IdleTimeout = 120
-	}
+func New(pool *redis.Pool) *Redis {
+	return &Redis{pool}
+}
 
-	log.Info("init cache ...")
+func Default(host string, port int, password ...string) *Redis {
 	pool := &redis.Pool{
-		MaxIdle:     r.MaxIdle,
-		IdleTimeout: r.IdleTimeout * time.Second,
+		MaxIdle:     DefaultRedisMaxIdle,
+		IdleTimeout: DefaultRedisIdleTimeout,
 		Dial: func() (redis.Conn, error) {
-			c, err := redis.Dial("tcp", fmt.Sprintf("%v:%v", r.Host, r.Port))
+			c, err := redis.Dial("tcp", fmt.Sprintf("%v:%v", host, port))
 			errors.Panic(err)
-			if r.Password != "" {
-				if _, err := c.Do("AUTH", r.Password); err != nil {
+			if len(password) > 0 && password[0] != "" {
+				if _, err := c.Do("AUTH", password[0]); err != nil {
 					errors.Panic(err)
 				}
 			}
@@ -64,11 +53,11 @@ func (r *Redis) Init() {
 	}
 	_, err := pool.Dial()
 	if err != nil {
-		log.WithError(err).WithField("host", r.Host).WithField("port", r.Port).Error("redis connect error")
+		log.WithError(err).WithField("host", host).WithField("port", port).Error("redis connect error")
 		errors.Panic(err)
 	}
 
-	r.pool = pool
+	return &Redis{pool}
 }
 
 // Get 根据key获取值
@@ -86,7 +75,7 @@ func (r *Redis) Get(key string, target interface{}) bool {
 		return false
 	}
 
-	conn := r.pool.Get()
+	conn := r.Pool.Get()
 	defer conn.Close()
 	if v, err := conn.Do("GET", key); err != nil {
 		panic(err)
@@ -103,7 +92,7 @@ func (r *Redis) Get(key string, target interface{}) bool {
 
 // GetConn 获取链接
 func (r Redis) GetConn() redis.Conn {
-	return r.pool.Get()
+	return r.Pool.Get()
 }
 
 // Set 放置值
@@ -182,12 +171,12 @@ func (r Redis) Delete(key string) {
 }
 
 // Close 关闭redis 链接
-func (r Redis) Close() {
-	if r.pool == nil {
+func (r *Redis) Close() {
+	if r.Pool == nil {
 		log.Info("redis pool already closed")
 		return
 	}
-	if err := r.pool.Close(); err != nil {
+	if err := r.Pool.Close(); err != nil {
 		panic(err)
 	}
 
