@@ -35,8 +35,13 @@ var (
 )
 
 // Panic 如果err 不是nil，则panic
-func Panic(err error) {
+// 如果msgs 有填写，则panic msgs+err.Error()
+func Panic(err error, msgs ...string) {
 	if err != nil {
-		panic(err)
+		if len(msgs) > 0 {
+			panic(strings.Join(msgs, ",") + err.Error())
+		} else {
+			panic(err)
+		}
 	}
 }
