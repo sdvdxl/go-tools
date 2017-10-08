@@ -91,34 +91,34 @@ func (r *Redis) Get(key string, target interface{}) bool {
 }
 
 // GetConn 获取链接
-func (r Redis) GetConn() redis.Conn {
+func (r *Redis) GetConn() redis.Conn {
 	return r.Pool.Get()
 }
 
 // Set 放置值
-func (r Redis) Set(key string, value interface{}) {
+func (r *Redis) Set(key string, value interface{}) {
 	r.SetExpired(key, value, 0)
 }
 
-func (r Redis) GetString(key string) string {
+func (r *Redis) GetString(key string) string {
 	var value string
 	r.Get(key, &value)
 	return value
 }
 
-func (r Redis) GetFloat64(key string) float64 {
+func (r *Redis) GetFloat64(key string) float64 {
 	var value float64
 	r.Get(key, &value)
 	return value
 }
 
-func (r Redis) GetBool(key string) bool {
+func (r *Redis) GetBool(key string) bool {
 	var value bool
 	r.Get(key, &value)
 	return value
 }
 
-func (r Redis) GetInt(key string) int {
+func (r *Redis) GetInt(key string) int {
 	var value int
 	r.Get(key, &value)
 	return value
@@ -127,7 +127,7 @@ func (r Redis) GetInt(key string) int {
 // SetExpired 放置值
 // 如果value 为非 golang 基本类型，则转换成,
 // 如果 expire 为<=0，那么不设置过期时间
-func (r Redis) SetExpired(key string, value interface{}, expire time.Duration) {
+func (r *Redis) SetExpired(key string, value interface{}, expire time.Duration) {
 	// log.DebugWithFields(log.Fields{"key": key, "value": value, "expireTime": expire}, "set to cache")
 
 	var buf bytes.Buffer // Stand-in for a network connection
@@ -147,7 +147,7 @@ func (r Redis) SetExpired(key string, value interface{}, expire time.Duration) {
 }
 
 // Exists 判断key是否存在
-func (r Redis) Exists(key string) bool {
+func (r *Redis) Exists(key string) bool {
 	conn := r.GetConn()
 	defer conn.Close()
 	if exists, err := redis.Bool(conn.Do("EXISTS", key)); err != nil {
@@ -158,7 +158,7 @@ func (r Redis) Exists(key string) bool {
 }
 
 // Delete 删除key
-func (r Redis) Delete(key string) {
+func (r *Redis) Delete(key string) {
 	conn := r.GetConn()
 	defer conn.Close()
 

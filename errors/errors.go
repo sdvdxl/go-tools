@@ -6,8 +6,8 @@ import (
 )
 
 // NewCode 新建一个error
-func NewCode(code int, msgs ...interface{}) CodeError {
-	return CodeError{Code: code, Msg: fmt.Sprintf(strings.Repeat("%s", len(msgs)), msgs...)}
+func NewCode(code int, msgs ...string) CodeError {
+	return CodeError{Code: code, Msg: strings.Join(msgs, ",")}
 }
 
 // ConstError 不可变error
@@ -24,13 +24,57 @@ type CodeError struct {
 	Code int    `json:"code"`
 }
 
+func (e CodeError) GetLog() string {
+	return e.Log
+}
+
+func (e CodeError) GetCode() int {
+	return e.Code
+}
+
+func (e CodeError) GetMsg() string {
+	return e.Msg
+}
+
 func (e CodeError) Error() string {
 	return fmt.Sprint("code:", e.Code, " msg:", e.Msg)
 }
 
+func (e CodeError) AddMsg(msgs ...string) CodeError {
+	e.Msg += strings.Join(msgs, ",")
+	return e
+}
+
+type codeError struct {
+	log  string
+	msg  string
+	code int
+}
+
+func (e codeError) GetLog() string {
+	return e.log
+}
+
+func (e codeError) GetCode() int {
+	return e.code
+}
+
+func (e codeError) GetMsg() string {
+	return e.msg
+}
+
+func (e codeError) Error() string {
+	return fmt.Sprint("code:", e.code, " msg:", e.msg)
+}
+
+func (e codeError) AddMsg(msgs ...string) codeError {
+	e.msg += strings.Join(msgs, ",")
+	return e
+}
+
 var (
 	NotFoundError        = NewNotFound(0, "not found")
-	DuplicatedError      = NewDuplicatedError(0, "already exists")
+	DuplicatedError      = NewDuplicated(0, "already exists")
 	IllegalArgumentError = NewIllegalArgument(0, "illegal argument")
 )
 

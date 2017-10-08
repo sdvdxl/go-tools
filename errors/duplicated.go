@@ -1,15 +1,24 @@
 package errors
 
-// NewDuplicatedError 新建
-func NewDuplicatedError(code int, msgs ...interface{}) error {
-	return Duplicated{NewCode(code, msgs...)}
+import (
+	"strings"
+)
+
+// NewDuplicated 新建
+func NewDuplicated(code int, msgs ...string) Duplicated {
+	return Duplicated{codeError{code: code, msg: strings.Join(msgs, ",")}}
 }
 
 // Duplicated 重复
 type Duplicated struct {
-	CodeError
+	codeError
 }
 
 func (e Duplicated) Error() string {
-	return e.CodeError.Error()
+	return e.codeError.Error()
+}
+
+func (e Duplicated) AddMsg(msgs ...string) Duplicated {
+	e.msg += strings.Join(msgs, ",")
+	return e
 }
